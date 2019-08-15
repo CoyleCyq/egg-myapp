@@ -14,12 +14,15 @@ module.exports = appInfo => {
    **/
   const config = exports = {};
   config.erpToken = 'admin';
-  config.sequelize = { // 阿里数据库 9月到期
+  config.sequelize = { 
     dialect: 'mysql',
-    database: 'test', // 
+    database: 'test', 
     username: 'root',
-    password: 'Cyq19940802',
-    host: 'rm-wz9282q8h24jq6j159o.mysql.rds.aliyuncs.com',
+    password: '123456',
+    host: '45.77.100.79',
+    define: {
+      underscored: false
+    },
     port: 3306
   };
   config.security = { // egg-cors
