@@ -14,7 +14,7 @@ module.exports = app => {
     suitName: { type: DataTypes.STRING(10), comment: '套装名称' },
     imgurl: { type: DataTypes.STRING, comment: '图片路径' },
     mainAttr: { type: DataTypes.STRING(10), comment: '主属性' },
-    soure: { type: DataTypes.STRING, comment: '来源' },
+    source: { type: DataTypes.STRING, comment: '来源' },
     elegantValue: { type: DataTypes.INTEGER, comment: '典雅属性值' },
     sweetValue: { type: DataTypes.INTEGER, comment: '甜美属性值' },
     freshValue: { type: DataTypes.INTEGER, comment: '清新属性值' },

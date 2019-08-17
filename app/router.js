@@ -11,4 +11,5 @@ module.exports = app => {
   router.get('/api/account/getUserInfo', controller.account.getUserInfo);
   router.post('/api/table/country', controller.table.getCountry);
   router.get('/api/table/allCountry', controller.table.getAllCountry);
+  router.get('/api/clothes/getAllclothes', controller.clothes.getAllClothes);
 };
