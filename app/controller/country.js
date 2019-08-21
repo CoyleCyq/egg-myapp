@@ -59,7 +59,7 @@ class CountryController extends Controller {
       // 返回数据
       ctx.body = body;
     } catch (error) {
-      console.log(error);
+      console.log('getCountry错误原因：', error);
       throw error;
     }
   }
@@ -86,7 +86,7 @@ class CountryController extends Controller {
       const body = ctx.formatResponse.formattedRes();
       ctx.body = body;
     } catch(error) {
-      console.log('123', error);
+      console.log('getAllCountry错误原因：', error);
       throw error;
     }
   }

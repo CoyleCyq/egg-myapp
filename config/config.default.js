@@ -19,7 +19,7 @@ module.exports = appInfo => {
     database: 'test', 
     username: 'root',
     password: '123456',
-    host: 'localhost',
+    host: '193.112.140.29',
     port: 3306,
     define: {
       underscored: false
