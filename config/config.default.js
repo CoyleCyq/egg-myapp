@@ -19,11 +19,11 @@ module.exports = appInfo => {
     database: 'test', 
     username: 'root',
     password: '123456',
-    host: '45.77.100.79',
+    host: 'localhost',
+    port: 3306,
     define: {
       underscored: false
     },
-    port: 3306
   };
   config.security = { // egg-cors
     csrf: {

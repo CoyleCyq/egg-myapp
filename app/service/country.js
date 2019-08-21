@@ -1,6 +1,6 @@
 const Service = require('egg').Service;
 
-class TableService extends Service {
+class CountryService extends Service {
   async findCountry(options) {
     try {
       const data = await Promise.all([
@@ -21,4 +21,4 @@ class TableService extends Service {
   }
 }
 
-module.exports = TableService;
+module.exports = CountryService;

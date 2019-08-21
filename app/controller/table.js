@@ -45,7 +45,7 @@ class TableController extends Controller {
       console.log('getcountry查询条件：', where)
 
       // 获取数据
-      const list = await ctx.service.table.findCountry({
+      const list = await ctx.service.country.findCountry({
         limit,
         offset,
         where,
