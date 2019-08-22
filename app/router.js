@@ -9,11 +9,18 @@ module.exports = app => {
   router.post('/api/account/login', controller.account.login);
   router.post('/api/account/logout', controller.account.logout);
   router.get('/api/account/getUserInfo', controller.account.getUserInfo);
-  /* country */
+  /* 国家 */
   router.get('/api/country/getCountry', controller.country.getCountry);
   router.get('/api/country/getAllCountry', controller.country.getAllCountry);
 
-  /* clothes */
+  /* 服装 */
   router.get('/api/clothes/getAllClothes', controller.clothes.getAllClothes);
   router.get('/api/clothes/getClothes', controller.clothes.getClothes);
+
+  /* 套装 */
+  router.get('/api/suit/getAllSuit', controller.suit.getAllSuit);
+  router.get('/api/suit/getSuit', controller.suit.getSuit);
+  router.post('/api/suit/addSuit', controller.suit.addSuit);
+  router.post('/api/suit/updateSuit', controller.suit.updateSuit);
+  router.post('/api/suit/deleteSuit', controller.suit.deleteSuit);
 };

@@ -28,7 +28,7 @@ module.exports = appInfo => {
   config.security = { // egg-cors
     csrf: {
       enable: false,
-      ignoreJSON: true
+      ignoreJSON: false
     },
     domainWhiteList: ['http://localhost:8080']
   };

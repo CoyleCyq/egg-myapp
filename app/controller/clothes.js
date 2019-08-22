@@ -1,4 +1,5 @@
 'use strict';
+const uuid = require('uuid');
 const Controller = require('egg').Controller;
 
 class ClothesController extends Controller {
@@ -10,13 +11,13 @@ class ClothesController extends Controller {
       // 数据组装
       let newList = list.map(itm => {
         return { 
-          id: itm.id, 
+          id: uuid.v1(), 
           name: itm.name,
           level: itm.level,
           type: itm.type,
           mainAttr: itm.mainAttr,
           suitId: itm.suitId,
-          suitName: itm.suitId,
+          suitName: itm.suitName,
           imgurl: itm.imgurl,
           elegantValue: itm.elegantValue,
           sweetValue: itm.sweetValue,
@@ -27,6 +28,7 @@ class ClothesController extends Controller {
           priceType: itm.priceType,
           label: itm.label,
           labelValue: itm.labelValue,
+          description: itm.description,
           createTime: app.dateFormat(itm.createTime), 
           updateTime: app.dateFormat(itm.updateTime) 
         }
@@ -77,8 +79,6 @@ class ClothesController extends Controller {
         ]
       }); 
 
-      console.log('list', list)
-
       // 数据组装
       let newList = list.dataList.map(itm => {
         return { 
@@ -99,6 +99,7 @@ class ClothesController extends Controller {
           priceType: itm.priceType,
           label: itm.label,
           labelValue: itm.labelValue,
+          description: itm.description,
           createTime: app.dateFormat(itm.createTime), 
           updateTime: app.dateFormat(itm.updateTime) 
         }
@@ -122,15 +123,15 @@ class ClothesController extends Controller {
       const prm = this.ctx.formatResponse.prm;
       console.log('addClothes参数：', prm)
       if (prm.name && prm.mainAttr && prm.type) {
-        const now = new Date.now()
-        const data = await service.Clothes.addClothes({
+        const now = new Date();
+        const data = await ctx.service.Clothes.addClothes({
           id: prm.id, 
           name: prm.name,
           level: prm.level,
           type: prm.type,
           mainAttr: prm.mainAttr,
           suitId: prm.suitId,
-          suitName: prm.suitId,
+          suitName: prm.suitName,
           imgurl: prm.imgurl,
           elegantValue: prm.elegantValue,
           sweetValue: prm.sweetValue,
@@ -141,6 +142,7 @@ class ClothesController extends Controller {
           priceType: prm.priceType,
           label: prm.label,
           labelValue: prm.labelValue,
+          description: prm.description,
           createTime: now,
           updateTime: now
         });
