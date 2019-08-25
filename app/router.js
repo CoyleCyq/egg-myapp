@@ -16,6 +16,8 @@ module.exports = app => {
   /* 服装 */
   router.get('/api/clothes/getAllClothes', controller.clothes.getAllClothes);
   router.get('/api/clothes/getClothes', controller.clothes.getClothes);
+  router.post('/api/clothes/addClothes', controller.clothes.addClothes);
+  router.post('/api/clothes/updateClothes', controller.clothes.updateClothes);
 
   /* 套装 */
   router.get('/api/suit/getAllSuit', controller.suit.getAllSuit);

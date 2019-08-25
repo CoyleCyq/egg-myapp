@@ -12,17 +12,18 @@ module.exports = app => {
     level: { type: DataTypes.STRING(10), comment: '等阶' },
     mainAttr: { type: DataTypes.STRING(10), comment: '主属性' },
     elegantValue: { type: DataTypes.INTEGER, comment: '典雅属性值' },
-    sweetValue: { type: DataTypes.INTEGER, comment: '甜美属性值' },
     freshValue: { type: DataTypes.INTEGER, comment: '清新属性值' },
+    sweetValue: { type: DataTypes.INTEGER, comment: '甜美属性值' },
     sexyValue: { type: DataTypes.INTEGER, comment: '性感属性值' },
     handsomeValue: { type: DataTypes.INTEGER, comment: '帅气属性值' },
-    skill1: { type: DataTypes.UUID, comment: '技能1' },
-    skill2: { type: DataTypes.UUID, comment: '技能2' },
-    skill3: { type: DataTypes.UUID, comment: '技能3' },
-    callOfShadow: { type: DataTypes.UUID, comment: '影之召唤'}
+    source: { type: DataTypes.STRING(100), comment: '来源' },
+    skill1: { type: DataTypes.STRING(100), comment: '技能1' },
+    skill2: { type: DataTypes.STRING(100), comment: '技能2' },
+    skill3: { type: DataTypes.STRING(100), comment: '技能3' },
+    callOfShadow: { type: DataTypes.STRING(100), comment: '影之召唤'}
   }, {
     comment: '设计师之影表',
-    tableName: 'label',
+    tableName: 'designershadow',
     updatedAt: 'updateTime',
     createdAt: 'createTime'
   });

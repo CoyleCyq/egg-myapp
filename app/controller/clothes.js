@@ -11,21 +11,27 @@ class ClothesController extends Controller {
       // 数据组装
       let newList = list.map(itm => {
         return { 
-          id: uuid.v1(), 
+          id: itm.id, 
           name: itm.name,
           level: itm.level,
           type: itm.type,
           mainAttr: itm.mainAttr,
-          suitId: itm.suitId,
+          suit: {
+            id: itm.suitId,
+            name: itm.suitName
+          },
           suitName: itm.suitName,
           imgurl: itm.imgurl,
+          source: itm.source,
           elegantValue: itm.elegantValue,
-          sweetValue: itm.sweetValue,
           freshValue: itm.freshValue,
+          sweetValue: itm.sweetValue,
           sexyValue: itm.sexyValue,
           handsomeValue: itm.handsomeValue,
           price: itm.price,
           priceType: itm.priceType,
+          brand: itm.brand,
+          amount: itm.amount,
           label: itm.label,
           labelValue: itm.labelValue,
           description: itm.description,
@@ -55,8 +61,16 @@ class ClothesController extends Controller {
       const limit = this.ctx.formatResponse.pageSize;
       const where = {};
 
-      if (prm.name) {
-        where.name = { [Op.like]: `%${prm.name}%` }
+      if (prm.searchType === 'name') {
+        where.name = { [Op.like]: `%${prm.keyword}%` }
+      }
+      if (prm.searchType === 'label') {
+        // 模糊搜索
+        where.label = { [Op.like]: `%${prm.keyword}%` }
+      }
+      if (prm.searchType === 'suitName') {
+        // 模糊搜索
+        where.suitName = { [Op.like]: `%${prm.keyword}%` }
       }
       if (prm.mainAttr) {
         // 模糊搜索
@@ -66,6 +80,11 @@ class ClothesController extends Controller {
         // 模糊搜索
         where.type = { [Op.like]: `%${prm.type}%` }
       }
+      if (prm.level) {
+        // 模糊搜索
+        where.level = { [Op.like]: `%${prm.level}%` }
+      }
+      
 
       console.log('getClothes查询条件：', where)
 
@@ -75,7 +94,7 @@ class ClothesController extends Controller {
         offset,
         where,
         order: [
-          ['name', 'asc']
+          ['createTime', 'desc']
         ]
       }); 
 
@@ -87,16 +106,22 @@ class ClothesController extends Controller {
           level: itm.level,
           type: itm.type,
           mainAttr: itm.mainAttr,
-          suitId: itm.suitId,
-          suitName: itm.suitId,
+          suit: {
+            id: itm.suitId,
+            name: itm.suitName
+          },
+          suitName: itm.suitName,
           imgurl: itm.imgurl,
+          source: itm.source,
           elegantValue: itm.elegantValue,
-          sweetValue: itm.sweetValue,
           freshValue: itm.freshValue,
+          sweetValue: itm.sweetValue,
           sexyValue: itm.sexyValue,
           handsomeValue: itm.handsomeValue,
           price: itm.price,
           priceType: itm.priceType,
+          brand: itm.brand,
+          amount: itm.amount,
           label: itm.label,
           labelValue: itm.labelValue,
           description: itm.description,
@@ -120,26 +145,29 @@ class ClothesController extends Controller {
   async addClothes() {
     const { ctx, app } = this;
     try {
-      const prm = this.ctx.formatResponse.prm;
+      const prm = ctx.formatResponse.prm;
       console.log('addClothes参数：', prm)
-      if (prm.name && prm.mainAttr && prm.type) {
+      if (prm.name && prm.mainAttr && prm.type && prm.level) {
         const now = new Date();
-        const data = await ctx.service.Clothes.addClothes({
-          id: prm.id, 
+        const data = await ctx.service.clothes.addClothes({
+          id: uuid.v1(), 
           name: prm.name,
           level: prm.level,
           type: prm.type,
           mainAttr: prm.mainAttr,
-          suitId: prm.suitId,
-          suitName: prm.suitName,
+          suitId: prm.suit.id,
+          suitName: prm.suit.name,
           imgurl: prm.imgurl,
+          source: prm.source,
           elegantValue: prm.elegantValue,
-          sweetValue: prm.sweetValue,
           freshValue: prm.freshValue,
+          sweetValue: prm.sweetValue,
           sexyValue: prm.sexyValue,
           handsomeValue: prm.handsomeValue,
           price: prm.price,
           priceType: prm.priceType,
+          brand: prm.brand,
+          amount: prm.amount,
           label: prm.label,
           labelValue: prm.labelValue,
           description: prm.description,
@@ -154,6 +182,48 @@ class ClothesController extends Controller {
       }
     } catch (error) {
       console.log('addClothes失败! 原因为：', error);
+      throw error;
+    }
+  }
+  // 更新服饰
+  async updateClothes() {
+    const { ctx, app } = this;
+    try {
+      const prm = ctx.formatResponse.prm;
+      console.log('updateClothes参数：', prm)
+      if (prm.name && prm.mainAttr && prm.type && prm.level) {
+        const now = new Date();
+        const data = await ctx.service.clothes.updateClothes(prm.id, {
+          name: prm.name,
+          level: prm.level,
+          type: prm.type,
+          mainAttr: prm.mainAttr,
+          suitId: prm.suit.id,
+          suitName: prm.suit.name,
+          imgurl: prm.imgurl,
+          source: prm.source,
+          elegantValue: prm.elegantValue,
+          freshValue: prm.freshValue,
+          sweetValue: prm.sweetValue,
+          sexyValue: prm.sexyValue,
+          handsomeValue: prm.handsomeValue,
+          price: prm.price,
+          priceType: prm.priceType,
+          brand: prm.brand,
+          amount: prm.amount,
+          label: prm.label,
+          labelValue: prm.labelValue,
+          description: prm.description,
+          updateTime: now
+        });
+        ctx.formatResponse.body = data;
+        const body = ctx.formatResponse.formattedRes();
+        ctx.body = body;
+      } else {
+        throw new Error("缺少参数");
+      }
+    } catch (error) {
+      console.log('updateClothes失败! 原因为：', error);
       throw error;
     }
   }

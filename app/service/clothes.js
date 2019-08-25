@@ -26,7 +26,11 @@ class ClothesService extends Service {
   }
   // 改
   async updateClothes(id, clothes) {
-    return this.app.model.Clothes.update(clothes, { id: id });
+    return this.app.model.Clothes.update(clothes, {
+      where: {
+        id: id
+      }
+    });
   }
   // 删
   async deleteClothes(id) {

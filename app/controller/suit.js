@@ -52,6 +52,10 @@ class SuitController extends Controller {
         // 模糊搜索
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
       }
+      if (prm.level) {
+        // 模糊搜索
+        where.level = { [Op.like]: `%${prm.level}%` }
+      }
       if (prm.author) {
         // 模糊搜索
         where.author = { [Op.like]: `%${prm.author}%` }
