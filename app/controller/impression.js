@@ -2,25 +2,27 @@
 const uuid = require('uuid');
 const Controller = require('egg').Controller;
 
-class SuitController extends Controller {
-  // 获取所有套装
-  async getAllSuit() {
+class ImpressionController extends Controller {
+  // 获取所有印象
+  async getAllImpression() {
     const { ctx, app } = this;
     try {
-      const list = await ctx.service.suit.findAllSuit()
+      const list = await ctx.service.impression.findAllImpression()
       // 数据组装
       let newList = list.map(itm => {
         return { 
           id: itm.id,
           name: itm.name,
           level: itm.level,
-          author: itm.author,
           mainAttr: itm.mainAttr,
-          amount: itm.amount,
+          attrvalue: itm.attrvalue,
           source: itm.source,
-          label: itm.label,
+          skill: itm.skill,
+          description: itm.description,
+          resonance: itm.resonance,
+          imgurl: itm.imgurl,
           createTime: app.dateFormat(itm.createTime), 
-          updateTime: app.dateFormat(itm.updateTime) 
+          updateTime: app.dateFormat(itm.updateTime)
         }
       })
 
@@ -31,44 +33,39 @@ class SuitController extends Controller {
       const body = ctx.formatResponse.formattedRes();
       ctx.body = body;
     } catch(error) {
-      console.log('getAllSuit失败! 原因为：', error);
+      console.log('getAllImpression失败! 原因为：', error);
       throw error;
     }
   }
-  // 获取套装（分页）
-  async getSuit() {
+  // 获取印象（分页）
+  async getImpression() {
     const { ctx, app } = this;
     try {
       const prm = ctx.formatResponse.prm;
-      console.log('getSuit参数：', prm)
+      console.log('getImpression参数：', prm)
       const offset = ctx.formatResponse.skip;
       const limit = ctx.formatResponse.pageSize;
       const where = {};
 
       if (prm.searchType === 'name') {
-        // 套装名 模糊搜索
         where.name = { [Op.like]: `%${prm.keyword}%` }
       }
-      if (prm.searchType === 'label') {
-        // 标签 模糊搜索
-        where.label = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'author') {
-        // 设计师 模糊搜索
-        where.author = { [Op.like]: `%${prm.keyword}%` }
+      if (prm.searchType === 'skill') {
+        where.skill = { [Op.like]: `%${prm.keyword}%` }
       }
       if (prm.mainAttr) {
-        // 主属性 模糊搜索
+        // 模糊搜索
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
       }
       if (prm.level) {
-        // 品质 模糊搜索
+        // 模糊搜索
         where.level = { [Op.like]: `%${prm.level}%` }
       }
-      console.log('getSuit查询条件：', where)
+
+      console.log('getImpression查询条件：', where)
 
       // 获取数据
-      const list = await ctx.service.suit.findSuit({
+      const list = await ctx.service.impression.findImpression({
         limit,
         offset,
         where,
@@ -83,13 +80,15 @@ class SuitController extends Controller {
           id: itm.id,
           name: itm.name,
           level: itm.level,
-          author: itm.author,
           mainAttr: itm.mainAttr,
-          amount: itm.amount,
+          attrvalue: itm.attrvalue,
           source: itm.source,
-          label: itm.label,
+          skill: itm.skill,
+          description: itm.description,
+          resonance: itm.resonance,
+          imgurl: itm.imgurl,
           createTime: app.dateFormat(itm.createTime), 
-          updateTime: app.dateFormat(itm.updateTime) 
+          updateTime: app.dateFormat(itm.updateTime)
         }
       })
 
@@ -100,27 +99,29 @@ class SuitController extends Controller {
       // 返回数据
       ctx.body = body;
     } catch (error) {
-      console.log('getSuit错误原因：', error);
+      console.log('getImpression错误原因：', error);
       throw error;
     }
   }
-  // 新建套装
-  async addSuit() {
+  // 新建印象
+  async addImpression() {
     const { ctx, app } = this;
     try {
       const prm = ctx.formatResponse.prm;
-      console.log('addSuit参数：', prm)
+      console.log('addImpression参数：', prm)
       if (prm.name && prm.mainAttr) {
         const now = new Date();
-        const data = await ctx.service.suit.addSuit({
+        const data = await ctx.service.impression.addImpression({
           id: uuid.v1(),
           name: prm.name,
           level: prm.level,
-          author: prm.author,
           mainAttr: prm.mainAttr,
-          amount: prm.amount,
+          attrvalue: prm.attrvalue,
           source: prm.source,
-          label: prm.label,
+          skill: prm.skill,
+          description: prm.description,
+          resonance: prm.resonance,
+          imgurl: prm.imgurl,
           createTime: now,
           updateTime: now
         });
@@ -131,26 +132,28 @@ class SuitController extends Controller {
         throw new Error("缺少参数");
       }
     } catch (error) {
-      console.log('addSuit失败! 原因为：', error);
+      console.log('addImpression失败! 原因为：', error);
       throw error;
     }
   }
-  // 更新套装
-  async updateSuit() {
+  // 更新印象
+  async updateImpression() {
     const { ctx, app } = this;
     try {
       const prm = ctx.formatResponse.prm;
-      console.log('updateSuit参数：', prm)
+      console.log('updateImpression参数：', prm)
       if (prm.id) {
         const now = new Date();
-        const data = await ctx.service.suit.updateSuit(prm.id, {
+        const data = await ctx.service.impression.updateImpression(prm.id, {
           name: prm.name,
           level: prm.level,
-          author: prm.author,
           mainAttr: prm.mainAttr,
-          amount: prm.amount,
+          attrvalue: prm.attrvalue,
           source: prm.source,
-          label: prm.label,
+          skill: prm.skill,
+          description: prm.description,
+          resonance: prm.resonance,
+          imgurl: prm.imgurl,
           updateTime: now
         });
         ctx.formatResponse.body = data;
@@ -160,26 +163,26 @@ class SuitController extends Controller {
         throw new Error("缺少参数");
       }
     } catch (error) {
-      console.log('updateSuit失败! 原因为：', error);
+      console.log('updateImpression失败! 原因为：', error);
       throw error;
     }
   }
-  // 删除套装
-  async deleteSuit() {
+  // 删除印象
+  async deleteImpression() {
     const { ctx, app } = this;
     try {
       const prm = ctx.formatResponse.prm;
       if (prm.id) {
-        const data = await ctx.service.suit.deleteSuit(prm.id);
+        const data = await ctx.service.impression.deleteImpression(prm.id);
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();
         ctx.body = body;
       }
     } catch (error) {
-      console.log('deleteSuit失败! 原因为：', error);
+      console.log('deleteImpression失败! 原因为：', error);
       throw error;
     }
   }
 }
 
-module.exports = SuitController
+module.exports = ImpressionController

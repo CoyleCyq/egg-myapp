@@ -65,23 +65,18 @@ class ClothesController extends Controller {
         where.name = { [Op.like]: `%${prm.keyword}%` }
       }
       if (prm.searchType === 'label') {
-        // 模糊搜索
         where.label = { [Op.like]: `%${prm.keyword}%` }
       }
       if (prm.searchType === 'suitName') {
-        // 模糊搜索
         where.suitName = { [Op.like]: `%${prm.keyword}%` }
       }
       if (prm.mainAttr) {
-        // 模糊搜索
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
       }
       if (prm.type) {
-        // 模糊搜索
         where.type = { [Op.like]: `%${prm.type}%` }
       }
       if (prm.level) {
-        // 模糊搜索
         where.level = { [Op.like]: `%${prm.level}%` }
       }
       
@@ -224,6 +219,22 @@ class ClothesController extends Controller {
       }
     } catch (error) {
       console.log('updateClothes失败! 原因为：', error);
+      throw error;
+    }
+  }
+  // 删除服饰
+  async deleteClothes() {
+    const { ctx, app } = this;
+    try {
+      const prm = ctx.formatResponse.prm;
+      if (prm.id) {
+        const data = await ctx.service.clothes.deleteClothes(prm.id);
+        ctx.formatResponse.body = data;
+        const body = ctx.formatResponse.formattedRes();
+        ctx.body = body;
+      }
+    } catch (error) {
+      console.log('deleteClothes失败! 原因为：', error);
       throw error;
     }
   }

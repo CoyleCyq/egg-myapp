@@ -2,25 +2,31 @@
 const uuid = require('uuid');
 const Controller = require('egg').Controller;
 
-class SuitController extends Controller {
-  // 获取所有套装
-  async getAllSuit() {
+class DesignerShadowController extends Controller {
+  // 获取所有印象
+  async getAllDesignerShadow() {
     const { ctx, app } = this;
     try {
-      const list = await ctx.service.suit.findAllSuit()
+      const list = await ctx.service.designerShadow.findAllDesignerShadow()
       // 数据组装
       let newList = list.map(itm => {
         return { 
           id: itm.id,
           name: itm.name,
           level: itm.level,
-          author: itm.author,
           mainAttr: itm.mainAttr,
-          amount: itm.amount,
+          elegantValue: itm.elegantValue,
+          freshValue: itm.freshValue,
+          sweetValue: itm.sweetValue,
+          sexyValue: itm.sexyValue,
+          handsomeValue: itm.handsomeValue,
           source: itm.source,
-          label: itm.label,
+          skill1: itm.skill1,
+          skill2: itm.skill2,
+          skill3: itm.skill3,
+          callOfShadow: itm.callOfShadow,
           createTime: app.dateFormat(itm.createTime), 
-          updateTime: app.dateFormat(itm.updateTime) 
+          updateTime: app.dateFormat(itm.updateTime)
         }
       })
 
@@ -31,44 +37,39 @@ class SuitController extends Controller {
       const body = ctx.formatResponse.formattedRes();
       ctx.body = body;
     } catch(error) {
-      console.log('getAllSuit失败! 原因为：', error);
+      console.log('getAllDesignerShadow失败! 原因为：', error);
       throw error;
     }
   }
-  // 获取套装（分页）
-  async getSuit() {
+  // 获取设计师之影（分页）
+  async getDesignerShadow() {
     const { ctx, app } = this;
     try {
       const prm = ctx.formatResponse.prm;
-      console.log('getSuit参数：', prm)
+      console.log('getDesignerShadow参数：', prm)
       const offset = ctx.formatResponse.skip;
       const limit = ctx.formatResponse.pageSize;
       const where = {};
 
       if (prm.searchType === 'name') {
-        // 套装名 模糊搜索
         where.name = { [Op.like]: `%${prm.keyword}%` }
       }
-      if (prm.searchType === 'label') {
-        // 标签 模糊搜索
-        where.label = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'author') {
-        // 设计师 模糊搜索
-        where.author = { [Op.like]: `%${prm.keyword}%` }
+      if (prm.searchType === 'callOfShadow') {
+        where.callOfShadow = { [Op.like]: `%${prm.keyword}%` }
       }
       if (prm.mainAttr) {
-        // 主属性 模糊搜索
+        // 模糊搜索
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
       }
       if (prm.level) {
-        // 品质 模糊搜索
+        // 模糊搜索
         where.level = { [Op.like]: `%${prm.level}%` }
       }
-      console.log('getSuit查询条件：', where)
+
+      console.log('getDesignerShadow查询条件：', where)
 
       // 获取数据
-      const list = await ctx.service.suit.findSuit({
+      const list = await ctx.service.designerShadow.findDesignerShadow({
         limit,
         offset,
         where,
@@ -83,13 +84,19 @@ class SuitController extends Controller {
           id: itm.id,
           name: itm.name,
           level: itm.level,
-          author: itm.author,
           mainAttr: itm.mainAttr,
-          amount: itm.amount,
+          elegantValue: itm.elegantValue,
+          freshValue: itm.freshValue,
+          sweetValue: itm.sweetValue,
+          sexyValue: itm.sexyValue,
+          handsomeValue: itm.handsomeValue,
           source: itm.source,
-          label: itm.label,
+          skill1: itm.skill1,
+          skill2: itm.skill2,
+          skill3: itm.skill3,
+          callOfShadow: itm.callOfShadow,
           createTime: app.dateFormat(itm.createTime), 
-          updateTime: app.dateFormat(itm.updateTime) 
+          updateTime: app.dateFormat(itm.updateTime)
         }
       })
 
@@ -100,27 +107,33 @@ class SuitController extends Controller {
       // 返回数据
       ctx.body = body;
     } catch (error) {
-      console.log('getSuit错误原因：', error);
+      console.log('getDesignerShadow错误原因：', error);
       throw error;
     }
   }
-  // 新建套装
-  async addSuit() {
+  // 新建印象
+  async addDesignerShadow() {
     const { ctx, app } = this;
     try {
       const prm = ctx.formatResponse.prm;
-      console.log('addSuit参数：', prm)
+      console.log('addDesignerShadow参数：', prm)
       if (prm.name && prm.mainAttr) {
         const now = new Date();
-        const data = await ctx.service.suit.addSuit({
+        const data = await ctx.service.designerShadow.addDesignerShadow({
           id: uuid.v1(),
           name: prm.name,
           level: prm.level,
-          author: prm.author,
           mainAttr: prm.mainAttr,
-          amount: prm.amount,
+          elegantValue: prm.elegantValue,
+          freshValue: prm.freshValue,
+          sweetValue: prm.sweetValue,
+          sexyValue: prm.sexyValue,
+          handsomeValue: prm.handsomeValue,
           source: prm.source,
-          label: prm.label,
+          skill1: prm.skill1,
+          skill2: prm.skill2,
+          skill3: prm.skill3,
+          callOfShadow: prm.callOfShadow,
           createTime: now,
           updateTime: now
         });
@@ -131,26 +144,32 @@ class SuitController extends Controller {
         throw new Error("缺少参数");
       }
     } catch (error) {
-      console.log('addSuit失败! 原因为：', error);
+      console.log('addDesignerShadow失败! 原因为：', error);
       throw error;
     }
   }
-  // 更新套装
-  async updateSuit() {
+  // 更新设计师之影
+  async updateDesignerShadow() {
     const { ctx, app } = this;
     try {
       const prm = ctx.formatResponse.prm;
-      console.log('updateSuit参数：', prm)
+      console.log('updateDesignerShadow参数：', prm)
       if (prm.id) {
         const now = new Date();
-        const data = await ctx.service.suit.updateSuit(prm.id, {
+        const data = await ctx.service.designerShadow.updateDesignerShadow(prm.id, {
           name: prm.name,
           level: prm.level,
-          author: prm.author,
           mainAttr: prm.mainAttr,
-          amount: prm.amount,
+          elegantValue: prm.elegantValue,
+          freshValue: prm.freshValue,
+          sweetValue: prm.sweetValue,
+          sexyValue: prm.sexyValue,
+          handsomeValue: prm.handsomeValue,
           source: prm.source,
-          label: prm.label,
+          skill1: prm.skill1,
+          skill2: prm.skill2,
+          skill3: prm.skill3,
+          callOfShadow: prm.callOfShadow,
           updateTime: now
         });
         ctx.formatResponse.body = data;
@@ -160,26 +179,26 @@ class SuitController extends Controller {
         throw new Error("缺少参数");
       }
     } catch (error) {
-      console.log('updateSuit失败! 原因为：', error);
+      console.log('updateDesignerShadow失败! 原因为：', error);
       throw error;
     }
   }
-  // 删除套装
-  async deleteSuit() {
+  // 删除设计师之影
+  async deleteDesignerShadow() {
     const { ctx, app } = this;
     try {
       const prm = ctx.formatResponse.prm;
       if (prm.id) {
-        const data = await ctx.service.suit.deleteSuit(prm.id);
+        const data = await ctx.service.designerShadow.deleteDesignerShadow(prm.id);
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();
         ctx.body = body;
       }
     } catch (error) {
-      console.log('deleteSuit失败! 原因为：', error);
+      console.log('deleteDesignerShadow失败! 原因为：', error);
       throw error;
     }
   }
 }
 
-module.exports = SuitController
+module.exports = DesignerShadowController

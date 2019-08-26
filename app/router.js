@@ -18,6 +18,7 @@ module.exports = app => {
   router.get('/api/clothes/getClothes', controller.clothes.getClothes);
   router.post('/api/clothes/addClothes', controller.clothes.addClothes);
   router.post('/api/clothes/updateClothes', controller.clothes.updateClothes);
+  router.post('/api/clothes/deleteClothes', controller.clothes.deleteClothes);
 
   /* 套装 */
   router.get('/api/suit/getAllSuit', controller.suit.getAllSuit);
@@ -25,4 +26,19 @@ module.exports = app => {
   router.post('/api/suit/addSuit', controller.suit.addSuit);
   router.post('/api/suit/updateSuit', controller.suit.updateSuit);
   router.post('/api/suit/deleteSuit', controller.suit.deleteSuit);
+
+  /* 印象 */
+  router.get('/api/impression/getAllImpression', controller.impression.getAllImpression);
+  router.get('/api/impression/getImpression', controller.impression.getImpression);
+  router.post('/api/impression/addImpression', controller.impression.addImpression);
+  router.post('/api/impression/updateImpression', controller.impression.updateImpression);
+  router.post('/api/impression/deleteImpression', controller.impression.deleteImpression);
+  
+  /* 设计师之影 */
+  router.get('/api/designerShadow/getAllDesignerShadow', controller.designerShadow.getAllDesignerShadow);
+  router.get('/api/designerShadow/getDesignerShadow', controller.designerShadow.getDesignerShadow);
+  router.post('/api/designerShadow/addDesignerShadow', controller.designerShadow.addDesignerShadow);
+  router.post('/api/designerShadow/updateDesignerShadow', controller.designerShadow.updateDesignerShadow);
+  router.post('/api/designerShadow/deleteDesignerShadow', controller.designerShadow.deleteDesignerShadow);
+
 };
