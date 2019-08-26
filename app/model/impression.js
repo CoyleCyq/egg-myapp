@@ -12,6 +12,7 @@ module.exports = app => {
     level: { type: DataTypes.STRING(10), comment: '印象等级' },
     mainAttr: { type: DataTypes.STRING(10), comment: '主属性' },
     attrvalue: { type: DataTypes.INTEGER, comment: '属性值' },
+    author: { type: DataTypes.STRING(10), comment: '设计师' },
     source: { type: DataTypes.STRING(50), comment: '获得途径' },
     skill: { type: DataTypes.STRING(100), comment: '核心技能' },
     description: { type: DataTypes.STRING(100), comment: '印象描述' },

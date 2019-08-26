@@ -16,6 +16,7 @@ class ImpressionController extends Controller {
           level: itm.level,
           mainAttr: itm.mainAttr,
           attrvalue: itm.attrvalue,
+          author: itm.author,
           source: itm.source,
           skill: itm.skill,
           description: itm.description,
@@ -53,6 +54,9 @@ class ImpressionController extends Controller {
       if (prm.searchType === 'skill') {
         where.skill = { [Op.like]: `%${prm.keyword}%` }
       }
+      if (prm.searchType === 'author') {
+        where.author = { [Op.like]: `%${prm.keyword}%` }
+      }
       if (prm.mainAttr) {
         // 模糊搜索
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
@@ -82,6 +86,7 @@ class ImpressionController extends Controller {
           level: itm.level,
           mainAttr: itm.mainAttr,
           attrvalue: itm.attrvalue,
+          author: itm.author,
           source: itm.source,
           skill: itm.skill,
           description: itm.description,
@@ -117,6 +122,7 @@ class ImpressionController extends Controller {
           level: prm.level,
           mainAttr: prm.mainAttr,
           attrvalue: prm.attrvalue,
+          author: prm.author,
           source: prm.source,
           skill: prm.skill,
           description: prm.description,
@@ -149,6 +155,7 @@ class ImpressionController extends Controller {
           level: prm.level,
           mainAttr: prm.mainAttr,
           attrvalue: prm.attrvalue,
+          author: prm.author,
           source: prm.source,
           skill: prm.skill,
           description: prm.description,

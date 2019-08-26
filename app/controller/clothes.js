@@ -21,6 +21,7 @@ class ClothesController extends Controller {
             name: itm.suitName
           },
           suitName: itm.suitName,
+          author: itm.author,
           imgurl: itm.imgurl,
           source: itm.source,
           elegantValue: itm.elegantValue,
@@ -70,6 +71,9 @@ class ClothesController extends Controller {
       if (prm.searchType === 'suitName') {
         where.suitName = { [Op.like]: `%${prm.keyword}%` }
       }
+      if (prm.searchType === 'author') {
+        where.author = { [Op.like]: `%${prm.keyword}%` }
+      }
       if (prm.mainAttr) {
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
       }
@@ -106,6 +110,7 @@ class ClothesController extends Controller {
             name: itm.suitName
           },
           suitName: itm.suitName,
+          author: itm.author,
           imgurl: itm.imgurl,
           source: itm.source,
           elegantValue: itm.elegantValue,
@@ -152,6 +157,7 @@ class ClothesController extends Controller {
           mainAttr: prm.mainAttr,
           suitId: prm.suit.id,
           suitName: prm.suit.name,
+          author: prm.author,
           imgurl: prm.imgurl,
           source: prm.source,
           elegantValue: prm.elegantValue,
@@ -195,6 +201,7 @@ class ClothesController extends Controller {
           mainAttr: prm.mainAttr,
           suitId: prm.suit.id,
           suitName: prm.suit.name,
+          author: prm.author,
           imgurl: prm.imgurl,
           source: prm.source,
           elegantValue: prm.elegantValue,
