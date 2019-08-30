@@ -45,18 +45,8 @@ class SuitController extends Controller {
       const limit = ctx.formatResponse.pageSize;
       const where = {};
 
-      if (prm.searchType === 'name') {
-        // 套装名 模糊搜索
-        where.name = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'label') {
-        // 标签 模糊搜索
-        where.label = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'author') {
-        // 设计师 模糊搜索
-        where.author = { [Op.like]: `%${prm.keyword}%` }
-      }
+      where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+      
       if (prm.mainAttr) {
         // 主属性 模糊搜索
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
@@ -111,6 +101,18 @@ class SuitController extends Controller {
       const prm = ctx.formatResponse.prm;
       console.log('addSuit参数：', prm)
       if (prm.name && prm.mainAttr) {
+        const list = await ctx.service.suit.findSuit({
+          where: {
+            name: {
+              [Op.like]: `%${prm.name}%`
+            }
+          }
+        })
+
+        if (list.dataList.length >= 1 ) {
+          throw new Error("已存在相同的数据");
+        }
+
         const now = new Date();
         const data = await ctx.service.suit.addSuit({
           id: uuid.v1(),

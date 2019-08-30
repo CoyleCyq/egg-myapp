@@ -48,15 +48,8 @@ class ImpressionController extends Controller {
       const limit = ctx.formatResponse.pageSize;
       const where = {};
 
-      if (prm.searchType === 'name') {
-        where.name = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'skill') {
-        where.skill = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'author') {
-        where.author = { [Op.like]: `%${prm.keyword}%` }
-      }
+      where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+      
       if (prm.mainAttr) {
         // 模糊搜索
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
@@ -115,6 +108,18 @@ class ImpressionController extends Controller {
       const prm = ctx.formatResponse.prm;
       console.log('addImpression参数：', prm)
       if (prm.name && prm.mainAttr) {
+        const list = await ctx.service.impression.findImpression({
+          where: {
+            name: {
+              [Op.like]: `%${prm.name}%`
+            }
+          }
+        })
+
+        if (list.dataList.length >= 1 ) {
+          throw new Error("已存在相同的数据");
+        }
+
         const now = new Date();
         const data = await ctx.service.impression.addImpression({
           id: uuid.v1(),

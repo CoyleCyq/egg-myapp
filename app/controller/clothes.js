@@ -62,18 +62,8 @@ class ClothesController extends Controller {
       const limit = this.ctx.formatResponse.pageSize;
       const where = {};
 
-      if (prm.searchType === 'name') {
-        where.name = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'label') {
-        where.label = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'suitName') {
-        where.suitName = { [Op.like]: `%${prm.keyword}%` }
-      }
-      if (prm.searchType === 'author') {
-        where.author = { [Op.like]: `%${prm.keyword}%` }
-      }
+      where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+
       if (prm.mainAttr) {
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
       }
@@ -84,7 +74,6 @@ class ClothesController extends Controller {
         where.level = { [Op.like]: `%${prm.level}%` }
       }
       
-
       console.log('getClothes查询条件：', where)
 
       // 获取数据
@@ -148,6 +137,18 @@ class ClothesController extends Controller {
       const prm = ctx.formatResponse.prm;
       console.log('addClothes参数：', prm)
       if (prm.name && prm.mainAttr && prm.type && prm.level) {
+        const list = await ctx.service.clothes.findClothes({
+          where: {
+            name: {
+              [Op.like]: `%${prm.name}%`
+            }
+          }
+        })
+
+        if (list.dataList.length >= 1 ) {
+          throw new Error("已存在相同的数据");
+        }
+
         const now = new Date();
         const data = await ctx.service.clothes.addClothes({
           id: uuid.v1(), 
