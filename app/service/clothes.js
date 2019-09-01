@@ -20,6 +20,10 @@ class ClothesService extends Service {
       console.log(error)
     }
   }
+  // 获取所有
+  async findAllClothes(options) {
+    return this.app.model.Clothes.findAll(options)
+  }
   // 增
   async addClothes(clothes) {
     return this.app.model.Clothes.create(clothes)

@@ -44,9 +44,9 @@ class SuitController extends Controller {
       const offset = ctx.formatResponse.skip;
       const limit = ctx.formatResponse.pageSize;
       const where = {};
-
-      where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
-      
+      if (prm.searchType) {
+        where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+      }
       if (prm.mainAttr) {
         // 主属性 模糊搜索
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
@@ -63,7 +63,9 @@ class SuitController extends Controller {
         offset,
         where,
         order: [
-          ['name', 'asc']
+          ['level', 'DESC'],
+          ['mainAttr', 'ASC'],
+          ['name', 'DESC']
         ]
       }); 
 

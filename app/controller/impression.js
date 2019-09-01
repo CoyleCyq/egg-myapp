@@ -48,7 +48,9 @@ class ImpressionController extends Controller {
       const limit = ctx.formatResponse.pageSize;
       const where = {};
 
-      where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+      if (prm.searchType) {
+        where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+      }
       
       if (prm.mainAttr) {
         // 模糊搜索
@@ -67,7 +69,9 @@ class ImpressionController extends Controller {
         offset,
         where,
         order: [
-          ['name', 'asc']
+          ['level', 'DESC'],
+          ['mainAttr', 'ASC'],
+          ['name', 'ASC']
         ]
       }); 
 

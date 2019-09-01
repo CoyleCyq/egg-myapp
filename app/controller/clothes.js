@@ -7,7 +7,13 @@ class ClothesController extends Controller {
   async getAllClothes() {
     const { ctx, app } = this;
     try {
-      const list = await app.model.Clothes.findAll()
+      const list = await ctx.service.clothes.findAllClothes({
+        order: [
+          ['level', 'DESC'],
+          ['mainAttr', 'ASC'],
+          ['name', 'DESC']
+        ]
+      })
       // 数据组装
       let newList = list.map(itm => {
         return { 
@@ -56,13 +62,15 @@ class ClothesController extends Controller {
   async getClothes() {
     const { ctx, app } = this;
     try {
-      const prm = this.ctx.formatResponse.prm;
+      const prm = ctx.formatResponse.prm;
       console.log('getClothes参数：', prm)
       const offset = this.ctx.formatResponse.skip;
       const limit = this.ctx.formatResponse.pageSize;
       const where = {};
 
-      where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+      if (prm.searchType) {
+        where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+      }
 
       if (prm.mainAttr) {
         where.mainAttr = { [Op.like]: `%${prm.mainAttr}%` }
@@ -82,7 +90,9 @@ class ClothesController extends Controller {
         offset,
         where,
         order: [
-          ['createTime', 'desc']
+          ['level', 'DESC'],
+          ['mainAttr', 'ASC'],
+          ['name', 'DESC']
         ]
       }); 
 

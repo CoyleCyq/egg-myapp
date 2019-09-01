@@ -1,7 +1,7 @@
 const Service = require('egg').Service;
 
 class DesignerShadowService extends Service {
-  // 获取套装（分页）
+  // 获取设计师之影（分页）
   async findDesignerShadow(options) {
     try {
       const data = await Promise.all([
@@ -20,9 +20,9 @@ class DesignerShadowService extends Service {
       console.log(error)
     }
   }
-  // 获取所有套装
-  async findAllDesignerShadow() {
-    return this.app.model.DesignerShadow.findAll()
+  // 获取所有设计师之影
+  async findAllDesignerShadow(options) {
+    return this.app.model.DesignerShadow.findAll(options)
   }
   // 增
   async addDesignerShadow(data) {

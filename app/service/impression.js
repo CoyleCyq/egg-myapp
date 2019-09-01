@@ -21,8 +21,8 @@ class ImpressionService extends Service {
     }
   }
   // 获取所有套装
-  async findAllImpression() {
-    return this.app.model.Impression.findAll()
+  async findAllImpression(options) {
+    return this.app.model.Impression.findAll(options)
   }
   // 增
   async addImpression(impression) {

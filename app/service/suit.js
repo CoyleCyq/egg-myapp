@@ -21,8 +21,8 @@ class SuitService extends Service {
     }
   }
   // 获取所有套装
-  async findAllSuit() {
-    return this.app.model.Suit.findAll()
+  async findAllSuit(options) {
+    return this.app.model.Suit.findAll(options)
   }
   // 增
   async addSuit(suit) {
