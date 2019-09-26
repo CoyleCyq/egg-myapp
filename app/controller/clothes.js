@@ -22,6 +22,7 @@ class ClothesController extends Controller {
           level: itm.level,
           type: itm.type,
           mainAttr: itm.mainAttr,
+          mainAttrValue: itm.mainAttrValue,
           suit: {
             id: itm.suitId,
             name: itm.suitName
@@ -92,7 +93,8 @@ class ClothesController extends Controller {
         order: [
           ['level', 'DESC'],
           ['mainAttr', 'ASC'],
-          ['name', 'DESC']
+          ['suitName', 'DESC'],
+          ['type', 'DESC']
         ]
       }); 
 
@@ -104,6 +106,7 @@ class ClothesController extends Controller {
           level: itm.level,
           type: itm.type,
           mainAttr: itm.mainAttr,
+          mainAttrValue: itm.mainAttrValue,
           suit: {
             id: itm.suitId,
             name: itm.suitName
@@ -149,9 +152,7 @@ class ClothesController extends Controller {
       if (prm.name && prm.mainAttr && prm.type && prm.level) {
         const list = await ctx.service.clothes.findClothes({
           where: {
-            name: {
-              [Op.like]: `%${prm.name}%`
-            }
+            name: prm.name
           }
         })
 
@@ -166,6 +167,7 @@ class ClothesController extends Controller {
           level: prm.level,
           type: prm.type,
           mainAttr: prm.mainAttr,
+          mainAttrValue: Math.max(prm.elegantValue, prm.freshValue, prm.sweetValue, prm.sexyValue, prm.handsomeValue),
           suitId: prm.suit.id,
           suitName: prm.suit.name,
           author: prm.author,
@@ -210,6 +212,7 @@ class ClothesController extends Controller {
           level: prm.level,
           type: prm.type,
           mainAttr: prm.mainAttr,
+          mainAttrValue: Math.max(prm.elegantValue, prm.freshValue, prm.sweetValue, prm.sexyValue, prm.handsomeValue),
           suitId: prm.suit.id,
           suitName: prm.suit.name,
           author: prm.author,

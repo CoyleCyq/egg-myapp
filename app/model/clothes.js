@@ -12,6 +12,7 @@ module.exports = app => {
     level: { type: DataTypes.STRING(10), comment: '服装等级' },
     type: { type: DataTypes.STRING(10), comment: '服装类型（上装，下装。。。）' },
     mainAttr: { type: DataTypes.STRING(10), comment: '主属性' },
+    mainAttrValue: { type: DataTypes.INTEGER, comment: '主属性值' },
     suitId: { type: DataTypes.UUID, comment: '套装Id' },
     suitName: { type: DataTypes.STRING(10), comment: '套装名称' },
     author: { type: DataTypes.STRING(10), comment: '设计师' },

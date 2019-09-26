@@ -40,5 +40,7 @@ module.exports = app => {
   router.post('/api/designerShadow/addDesignerShadow', controller.designerShadow.addDesignerShadow);
   router.post('/api/designerShadow/updateDesignerShadow', controller.designerShadow.updateDesignerShadow);
   router.post('/api/designerShadow/deleteDesignerShadow', controller.designerShadow.deleteDesignerShadow);
-
+  /* 分数 */ 
+  router.get('/api/alliance/getAllData', controller.alliance.getAllData);
+  router.post('/api/alliance/singleUpdate', controller.alliance.singleUpdate);
 };
