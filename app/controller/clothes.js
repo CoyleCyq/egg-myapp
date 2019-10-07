@@ -161,8 +161,9 @@ class ClothesController extends Controller {
         }
 
         const now = new Date();
+        const clothesId = uuid.v1()
         const data = await ctx.service.clothes.addClothes({
-          id: uuid.v1(), 
+          id: clothesId, 
           name: prm.name,
           level: prm.level,
           type: prm.type,
@@ -171,7 +172,7 @@ class ClothesController extends Controller {
           suitId: prm.suit.id,
           suitName: prm.suit.name,
           author: prm.author,
-          imgurl: prm.imgurl,
+          imgurl: prm.imgurl || `https://cyq0802.xin/img/myAppsImg/${clothesId}.png`,
           source: prm.source,
           elegantValue: prm.elegantValue,
           freshValue: prm.freshValue,
