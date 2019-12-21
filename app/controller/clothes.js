@@ -70,7 +70,17 @@ class ClothesController extends Controller {
       const where = {};
 
       if (prm.searchType) {
-        where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+        if (prm.keyword.indexOf(',') > -1 || prm.keyword.indexOf('，') > -1) {
+          let keywordList = (prm.keyword).split(/[,，]/);
+          keywordList = keywordList.map((item) => {
+            return item.toUpperCase()
+          })
+          // 支持同时搜索多个
+          where[prm.searchType] = { [Op.in]: keywordList }
+        } else {
+          where[prm.searchType] = { [Op.like]: `%${prm.keyword}%` }
+        }
+        
       }
 
       if (prm.mainAttr) {
@@ -152,7 +162,9 @@ class ClothesController extends Controller {
       if (prm.name && prm.mainAttr && prm.type && prm.level) {
         const list = await ctx.service.clothes.findClothes({
           where: {
-            name: prm.name
+            name: prm.name,
+            type: prm.type,
+            level: prm.level
           }
         })
 
