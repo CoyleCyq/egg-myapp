@@ -11,8 +11,8 @@ module.exports = {
     enable: true,
     package: 'egg-cors',
   },
-  // passport: {
-  //   enable: true,
-  //   package: 'egg-passport',
-  // },
+  passport: {
+    enable: true,
+    package: 'egg-passport',
+  },
 };
