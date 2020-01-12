@@ -125,8 +125,8 @@ class SuitController extends Controller {
           amount: prm.amount,
           source: prm.source,
           label: prm.label,
-          createTime: now,
-          updateTime: now
+          createTime: app.dateFormat(now),
+          updateTime: app.dateFormat(now)
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();
@@ -155,7 +155,7 @@ class SuitController extends Controller {
           amount: prm.amount,
           source: prm.source,
           label: prm.label,
-          updateTime: now
+          updateTime: app.dateFormat(now)
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();

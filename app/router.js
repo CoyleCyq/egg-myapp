@@ -43,4 +43,8 @@ module.exports = app => {
   /* 分数 */ 
   router.get('/api/alliance/getAllData', controller.alliance.getAllData);
   router.post('/api/alliance/singleUpdate', controller.alliance.singleUpdate);
+
+  // 日志
+  router.post('/api/operationLog/addLog', controller.operationLog.addLog);
+  router.post('/api/operationLog/deleteLog', controller.operationLog.deleteLog);
 };

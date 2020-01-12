@@ -198,8 +198,8 @@ class ClothesController extends Controller {
           label: prm.label,
           labelValue: prm.labelValue,
           description: prm.description,
-          createTime: now,
-          updateTime: now
+          createTime: app.dateFormat(now),
+          updateTime: app.dateFormat(now)
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();
@@ -243,7 +243,7 @@ class ClothesController extends Controller {
           label: prm.label,
           labelValue: prm.labelValue,
           description: prm.description,
-          updateTime: now
+          updateTime: app.dateFormat(now)
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();

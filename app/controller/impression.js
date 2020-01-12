@@ -137,8 +137,8 @@ class ImpressionController extends Controller {
           description: prm.description,
           resonance: prm.resonance,
           imgurl: prm.imgurl,
-          createTime: now,
-          updateTime: now
+          createTime: app.dateFormat(now),
+          updateTime: app.dateFormat(now)
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();
@@ -170,7 +170,7 @@ class ImpressionController extends Controller {
           description: prm.description,
           resonance: prm.resonance,
           imgurl: prm.imgurl,
-          updateTime: now
+          updateTime: app.dateFormat(now)
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();

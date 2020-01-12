@@ -146,8 +146,8 @@ class DesignerShadowController extends Controller {
           skill2: prm.skill2,
           skill3: prm.skill3,
           callOfShadow: prm.callOfShadow,
-          createTime: now,
-          updateTime: now
+          createTime: app.dateFormat(now),
+          updateTime: app.dateFormat(now)
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();
@@ -182,7 +182,7 @@ class DesignerShadowController extends Controller {
           skill2: prm.skill2,
           skill3: prm.skill3,
           callOfShadow: prm.callOfShadow,
-          updateTime: now
+          updateTime: app.dateFormat(now)
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();

@@ -43,7 +43,7 @@ class AllianceController extends Controller {
             name: prm.name,
             date: prm.date,
             score: prm.score,
-            updateTime: now
+            updateTime: app.dateFormat(now)
           })
         } else {
           // 如果没有数据就新增
@@ -52,8 +52,8 @@ class AllianceController extends Controller {
             name: prm.name,
             date: prm.date,
             score: prm.score,
-            createTime: now,
-            updateTime: now
+            createTime: app.dateFormat(now),
+            updateTime: app.dateFormat(now)
           })
         }
         
