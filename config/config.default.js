@@ -16,11 +16,12 @@ module.exports = appInfo => {
   config.erpToken = 'admin';
   config.sequelize = { 
     dialect: 'mysql',
-    database: 'test', 
-    username: 'user',
-    password: 'password',
-    host: 'host',
-    port: 3306,
+    database: 'Nikki', 
+    username: 'Nikki',
+    password: 'RAB8LDCcLwXs3W5n',
+    host: '193.112.140.29',
+    port: 5678,
+    timezone: '+08:00',
     define: {
       underscored: false
     },
