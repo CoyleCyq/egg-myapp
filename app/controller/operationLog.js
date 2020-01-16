@@ -3,6 +3,40 @@ const uuid = require('uuid');
 const Controller = require('egg').Controller;
 
 class OperationLogController extends Controller {
+
+  async findLog() {
+    const { ctx, app } = this;
+    try {
+      const list = await ctx.service.operationLog.findLog({
+        order: [
+          ['createTime', 'DESC']
+        ]
+      })
+      // 数据组装
+      let newList = list.map(itm => {
+        return { 
+          id: itm.id, 
+          url: itm.url,
+          request: itm.request,
+          response: itm.response,
+          type: itm.type,
+          spendTime: itm.spendTime,
+          createTime: app.dateFormat(itm.createTime), 
+          updateTime: app.dateFormat(itm.updateTime) 
+        }
+      })
+
+      // 格式化数据
+      ctx.formatResponse.list = newList;
+      ctx.formatResponse.count = newList.length;
+      ctx.formatResponse.pageSize = newList.length;
+      const body = ctx.formatResponse.formattedRes();
+      ctx.body = body;
+    } catch(error) {
+      console.log('获取所有服装信息失败! 原因为：', error);
+      throw error;
+    }
+  }
   // 新增日志
   async addLog() {
     const { ctx, app } = this;
@@ -10,6 +44,18 @@ class OperationLogController extends Controller {
       const prm = ctx.formatResponse.prm;
       console.log('addLog参数：', prm)
       if (prm.url && prm.type) {
+        const list = await ctx.service.operationLog.findLog({
+          where: {
+            url: prm.url,
+            type: prm.type,
+            request: prm.request
+          }
+        })
+
+        if (list.dataList.length >= 1 ) {
+          throw new Error("已存在相同的数据");
+        }
+
         const now = new Date();
         const logId = uuid.v1()
         const data = await ctx.service.operationLog.addLog({
@@ -33,7 +79,7 @@ class OperationLogController extends Controller {
       throw error;
     }
   }
-  // 删除服饰
+  // 删除日志
   async deleteLog() {
     const { ctx, app } = this;
     try {
