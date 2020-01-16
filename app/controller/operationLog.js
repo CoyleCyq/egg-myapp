@@ -56,7 +56,7 @@ class OperationLogController extends Controller {
           throw new Error("已存在相同的数据");
         }
 
-        const now = new Date();
+        const now = app.dateFormat(new Date());
         const logId = uuid.v1()
         const data = await ctx.service.operationLog.addLog({
           id: logId, 
@@ -65,8 +65,8 @@ class OperationLogController extends Controller {
           response: prm.response,
           type: prm.type,
           spendTime: prm.spendTime,
-          createTime: app.dateFormat(now),
-          updateTime: app.dateFormat(now)
+          createTime: now,
+          updateTime: now
         });
         ctx.formatResponse.body = data;
         const body = ctx.formatResponse.formattedRes();
